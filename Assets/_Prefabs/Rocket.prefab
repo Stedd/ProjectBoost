@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5450223362493968842}
   - component: {fileID: 1989272533457918135}
   - component: {fileID: 966416885035283919}
+  - component: {fileID: 6829980271920044108}
+  - component: {fileID: 7387728965816961602}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -93,5 +95,37 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6829980271920044108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972318539411831433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07b24f2d95b7f4e4d9b27eb2f973f250, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thrustBase: 600000
+  thrustModifier: 1
+  rotationSpeedBase: 250000
+  rotationSpeedModifier: 1
+--- !u!54 &7387728965816961602
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972318539411831433}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
