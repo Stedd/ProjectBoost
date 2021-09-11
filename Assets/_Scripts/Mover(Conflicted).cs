@@ -46,11 +46,6 @@ public class Mover : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             thrustCommand = 1;
-            PlayAudio();
-        }
-        else
-        {
-            StopAudio();
         }
 
         thrustFinal = Vector3.up * thrustCommand * thrustBase * thrustModifier;
