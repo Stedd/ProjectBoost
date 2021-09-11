@@ -7,10 +7,14 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float collisionSequenceTime;
     [SerializeField] float nextLevelTime;
 
+    [SerializeField] AudioClip crashSound;
+    [SerializeField] AudioClip successSound;
+
     Rigidbody   rigBody;
     Mover       mover;
+    AudioSource audSource;
 
-    
+
     string collidedWith;
 
     int currentSceneIndex;
@@ -18,8 +22,9 @@ public class CollisionHandler : MonoBehaviour
 
     private void Start()
     {
-        rigBody = GetComponent<Rigidbody>();
-        mover   = GetComponent<Mover>();
+        rigBody     = GetComponent<Rigidbody>();
+        mover       = GetComponent<Mover>();
+        audSource   = GetComponent<AudioSource>();
     }
 
 
@@ -33,7 +38,7 @@ public class CollisionHandler : MonoBehaviour
                 Debug.Log("On the launchpad!");
                 break;
             case "Finish":
-                Invoke("LoadNextLevel", nextLevelTime);
+                NextLevel();
                 break;
             default:
                 Collided();
@@ -45,8 +50,20 @@ public class CollisionHandler : MonoBehaviour
     {
         rigBody.freezeRotation  = false;
         rigBody.constraints     = 0;
-        mover.enabled           = false;
+        mover.enabled = false;
+
+        PlayAudio(crashSound);
+     
         Invoke("ReloadLevel", collisionSequenceTime);
+    }
+
+    void NextLevel()
+    {
+        mover.enabled = false;
+        
+        PlayAudio(successSound);
+        
+        Invoke("LoadNextLevel", nextLevelTime);
     }
 
     void LoadNextLevel()
@@ -67,4 +84,19 @@ public class CollisionHandler : MonoBehaviour
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         SceneManager.LoadScene(currentSceneIndex);
     }
+
+    private void PlayAudio(AudioClip _clip)
+    {
+        audSource.PlayOneShot(_clip);
+    }
+
+    //private void StopAudio()
+    //{
+    //    if (audSource.isPlaying)
+    //    {
+    //        audSource.Stop();
+    //    }
+    //}
+
+
 }

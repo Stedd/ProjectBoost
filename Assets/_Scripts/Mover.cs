@@ -9,6 +9,8 @@ public class Mover : MonoBehaviour
     [SerializeField] float rotationSpeedBase;
     [SerializeField] float rotationSpeedModifier;
 
+    [SerializeField] AudioClip mainEngineSound;
+
     public float thrustCommand;
     public float rotationCommand;
 
@@ -47,7 +49,7 @@ public class Mover : MonoBehaviour
             thrustCommand = 1;
             PlayAudio();
         }
-        else
+        if(Input.GetKeyUp(KeyCode.Space))
         {
             StopAudio();
         }
@@ -84,7 +86,7 @@ public class Mover : MonoBehaviour
     {
         if (!audSource.isPlaying)
         {
-            audSource.Play();
+            audSource.PlayOneShot(mainEngineSound);
         }
     }
 
