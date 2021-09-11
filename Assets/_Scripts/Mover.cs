@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] float thrustBase; 
+    [SerializeField] float thrustBase;
     [SerializeField] float thrustModifier;
 
     [SerializeField] float rotationSpeedBase;
     [SerializeField] float rotationSpeedModifier;
 
+    public float thrustCommand;
+    public float rotationCommand;
 
-    float thrustFinal;
-    float rotationSpeedFinal;
+    public Vector3 thrustFinal;
+    public Vector3 rotationSpeedFinal;
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,29 +28,50 @@ public class Mover : MonoBehaviour
     {
         ProcessThrust();
         ProcessRotation();
+        //Wind();
     }
 
+
+    void Wind()
+    {
+        ApplyForce(Vector3.left*50000);
+    }
 
     void ProcessThrust()
     {
-        thrustFinal = thrustBase * thrustModifier * Time.deltaTime;
-
+        thrustCommand = 0;
         if (Input.GetKey(KeyCode.Space))
         {
-            rb.AddRelativeForce(0, thrustFinal, 0);
+            thrustCommand = 1;
         }
+
+        thrustFinal = Vector3.up * thrustCommand * thrustBase * thrustModifier;
+        ApplyForce(thrustFinal);
     }
     void ProcessRotation()
     {
-        rotationSpeedFinal = rotationSpeedBase * rotationSpeedModifier * Time.deltaTime;
-
+        rotationCommand = 0;
         if (Input.GetKey(KeyCode.A))
         {
-            rb.AddRelativeTorque(0, 0, rotationSpeedFinal);
+            rotationCommand = 1;
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            rb.AddRelativeTorque(0, 0, -rotationSpeedFinal);
+            rotationCommand = -1;
         }
+
+        rotationSpeedFinal = Vector3.forward * rotationCommand * rotationSpeedBase * rotationSpeedModifier;
+        ApplyTorque(rotationSpeedFinal);
     }
+
+    private void ApplyForce(Vector3 _vec){
+        rb.AddRelativeForce(_vec * Time.deltaTime);
+    }
+
+    private void ApplyTorque(Vector3 _vec)
+    {
+        rb.AddRelativeTorque(_vec * Time.deltaTime);
+    }
+
+
 }
