@@ -129,3 +129,7 @@ MonoBehaviour:
   thrustModifier: 1
   rotationSpeedBase: 250000
   rotationSpeedModifier: 1
+  thrustCommand: 0
+  rotationCommand: 0
+  thrustFinal: {x: 0, y: 0, z: 0}
+  rotationSpeedFinal: {x: 0, y: 0, z: 0}
