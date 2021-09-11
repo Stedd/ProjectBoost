@@ -14,11 +14,12 @@ public class CollisionHandler : MonoBehaviour
     Mover       mover;
     AudioSource audSource;
 
-
     string collidedWith;
 
     int currentSceneIndex;
     int nextSceneIndex;
+
+    bool isTransitioning;
 
     private void Start()
     {
@@ -32,38 +33,49 @@ public class CollisionHandler : MonoBehaviour
     {
         collidedWith = collision.gameObject.tag;
 
+        if (isTransitioning) { return; }
+
         switch (collidedWith)
         {
             case "Friendly":
                 Debug.Log("On the launchpad!");
                 break;
             case "Finish":
-                NextLevel();
+                StartNextLevelSequence();
+               
                 break;
             default:
-                Collided();
+                StartCollisionSequence();
                 break;
         }
     }
 
-    void Collided()
+    void StartCollisionSequence()
     {
         rigBody.freezeRotation  = false;
         rigBody.constraints     = 0;
         mover.enabled = false;
 
+        audSource.Stop();
+
         PlayAudio(crashSound);
      
         Invoke("ReloadLevel", collisionSequenceTime);
+
+        isTransitioning = true;
     }
 
-    void NextLevel()
+    void StartNextLevelSequence()
     {
         mover.enabled = false;
-        
+
+        audSource.Stop();
+
         PlayAudio(successSound);
         
         Invoke("LoadNextLevel", nextLevelTime);
+        
+        isTransitioning = true;
     }
 
     void LoadNextLevel()
