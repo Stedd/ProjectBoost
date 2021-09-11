@@ -428,10 +428,6 @@ PrefabInstance:
       propertyPath: speedBase.y
       value: 30
       objectReference: {fileID: 0}
-    - target: {fileID: 6829980271920044108, guid: 94174558d30cad5418dac123c87231ce, type: 3}
-      propertyPath: rotationSpeedBase
-      value: 250000
-      objectReference: {fileID: 0}
     - target: {fileID: 7155787865570039542, guid: 94174558d30cad5418dac123c87231ce, type: 3}
       propertyPath: m_RootOrder
       value: 4
