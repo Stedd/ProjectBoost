@@ -1,0 +1,11 @@
+ProjectBoost Game Design Notes
+
+Player Experience:
+-Precision
+-Skillful
+
+Core Mechanic:
+-Skillfully fly spaceship and avoid environmental hazards.
+
+Game Mechanics:
+-Go from A to B to complete the level, then progress to the next level.

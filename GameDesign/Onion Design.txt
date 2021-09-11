@@ -1,0 +1,19 @@
+Onion Design
+
+Identify your core feature and start there and work your way outward where features deacrease in importance.
+
+Test: (write down the most important features of ProjectBoost)
+1. Spaceship controls (feel of movements, speed, inertia, gravity, manageable)
+2. Obstacles (hitboxes make sense/feels right based on visuals)
+3. Level design (provide a challenge with getting from A to B, increasing in difficulty as levels increase)
+
+
+
+By using this method you can answer some questions which often come up as you design you game
+here are some examples:
+
+What features should I include in my game?
+Where should i start development?
+What are my priorities?
+What if I run out of time?
+When should I stop?
