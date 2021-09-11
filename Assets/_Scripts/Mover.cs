@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Mover : MonoBehaviour
@@ -72,11 +71,11 @@ public class Mover : MonoBehaviour
         ApplyTorque(rotationSpeedFinal);
     }
 
-    private void ApplyForce(Vector3 _vec){
+    public void ApplyForce(Vector3 _vec){
         rigBody.AddRelativeForce(_vec * Time.deltaTime);
     }
 
-    private void ApplyTorque(Vector3 _vec)
+    public void ApplyTorque(Vector3 _vec)
     {
         rigBody.AddRelativeTorque(_vec * Time.deltaTime);
     }
