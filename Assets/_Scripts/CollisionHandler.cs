@@ -19,8 +19,7 @@ public class CollisionHandler : MonoBehaviour
 
     string collidedWith;
 
-    int currentSceneIndex;
-    int nextSceneIndex;
+    public bool isInvincible;
 
     bool isTransitioning;
 
@@ -30,7 +29,6 @@ public class CollisionHandler : MonoBehaviour
         mover       = GetComponent<Mover>();
         audSource   = GetComponent<AudioSource>();
     }
-
 
     void OnCollisionEnter(Collision collision)
     {
@@ -47,6 +45,7 @@ public class CollisionHandler : MonoBehaviour
                 StartNextLevelSequence();
                 break;
             default:
+                if (isInvincible) { break; }
                 StartCollisionSequence();
                 break;
         }
@@ -85,14 +84,14 @@ public class CollisionHandler : MonoBehaviour
         isTransitioning = true;
     }
 
-    void LoadNextLevel()
-    {
-        SceneManager.LoadScene(GetNextSceneIndex());
-    }
-
-    void ReloadLevel()
+    public void ReloadLevel()
     {
         SceneManager.LoadScene(GetCurrentSceneIndex());
+    }
+
+    public void LoadNextLevel()
+    {
+        SceneManager.LoadScene(GetNextSceneIndex());
     }
 
     private int GetNextSceneIndex()
@@ -105,14 +104,10 @@ public class CollisionHandler : MonoBehaviour
         }
         return _nextSceneIndex;
     }
+
     private int GetCurrentSceneIndex()
     {
         return SceneManager.GetActiveScene().buildIndex;
-    }
-
-    private void DisableMover()
-    {
-        mover.enabled = false;
     }
 
     private void FreeConstraints()
@@ -120,6 +115,12 @@ public class CollisionHandler : MonoBehaviour
         rigBody.freezeRotation = false;
         rigBody.constraints = 0;
     }
+
+    private void DisableMover()
+    {
+        mover.enabled = false;
+    }
+
     private void PlayAudioOneShot(AudioClip _clip)
     {
         audSource.PlayOneShot(_clip);
@@ -132,6 +133,7 @@ public class CollisionHandler : MonoBehaviour
             audSource.Stop();
         }
     }
+
     void PlayParticles(ParticleSystem _particles)
     {
         if (!_particles.isPlaying)

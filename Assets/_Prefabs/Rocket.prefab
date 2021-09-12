@@ -586,6 +586,7 @@ GameObject:
   - component: {fileID: 3296488892146209404}
   - component: {fileID: 8622964424064402056}
   - component: {fileID: 6477399015285504926}
+  - component: {fileID: 1332248608254538946}
   m_Layer: 0
   m_Name: Rocket
   m_TagString: Untagged
@@ -632,9 +633,7 @@ MonoBehaviour:
   rotationSpeedBase: 75000
   rotationSpeedModifier: 1
   mainEngineSound: {fileID: 8300000, guid: 348cac14adf7840418405c0f6c5bf562, type: 3}
-  mainEngineEmitCount: 3
   mainEngineParticles: {fileID: 1289447018400393581}
-  sideThrustersEmitCount: 1
   leftThrusterParticles: {fileID: 7528995245752593963}
   rightThrusterParticles: {fileID: 4849843671349059998}
   thrustCommand: 0
@@ -771,6 +770,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
+--- !u!114 &1332248608254538946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8972318539411831433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04c4a6b99e94f6c48a8c12e8e40f3b22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rocketMover: {fileID: 0}
+  rocketCollisionHandler: {fileID: 0}
 --- !u!1001 &1394641124472488977
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -828,14 +841,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3553fd250eb92d4091bebde350c6739, type: 3}
---- !u!198 &1289447018400393581 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 198100719057022332, guid: a3553fd250eb92d4091bebde350c6739, type: 3}
-  m_PrefabInstance: {fileID: 1394641124472488977}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1390291788135539493 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4940884351362868, guid: a3553fd250eb92d4091bebde350c6739, type: 3}
+  m_PrefabInstance: {fileID: 1394641124472488977}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1289447018400393581 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198100719057022332, guid: a3553fd250eb92d4091bebde350c6739, type: 3}
   m_PrefabInstance: {fileID: 1394641124472488977}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2106991843442963698
