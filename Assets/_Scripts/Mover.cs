@@ -11,9 +11,7 @@ public class Mover : MonoBehaviour
 
     [SerializeField] AudioClip mainEngineSound;
 
-    [SerializeField] int mainEngineEmitCount;
     [SerializeField] ParticleSystem mainEngineParticles;
-    [SerializeField] int sideThrustersEmitCount;
     [SerializeField] ParticleSystem leftThrusterParticles;
     [SerializeField] ParticleSystem rightThrusterParticles;
 
@@ -31,7 +29,7 @@ public class Mover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rigBody = GetComponent<Rigidbody>();
+        rigBody     = GetComponent<Rigidbody>();
         audSource   = GetComponent<AudioSource>();
     }
 
@@ -43,7 +41,6 @@ public class Mover : MonoBehaviour
         //Wind();
     }
 
-
     void Wind()
     {
         ApplyForce(Vector3.left*50000);
@@ -51,56 +48,42 @@ public class Mover : MonoBehaviour
 
     void ProcessThrust()
     {
-        thrustCommand = 0;
         if (Input.GetKey(KeyCode.Space))
         {
             thrustCommand = 1;
-
-            PlayAudio();
-
-            if (!mainEngineParticles.isPlaying)
-            {
-                mainEngineParticles.Play();
-            }
-
+            PlayAudio(mainEngineSound);
+            PlayParticles(mainEngineParticles);
         }
-        if(Input.GetKeyUp(KeyCode.Space))
+
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            mainEngineParticles.Stop();
+            thrustCommand = 0;
             StopAudio();
+            StopPatricles(mainEngineParticles);
         }
 
         thrustFinal = Vector3.up * thrustCommand * thrustBase * thrustModifier;
         ApplyForce(thrustFinal);
+
     }
+
     void ProcessRotation()
     {
-        rotationCommand = 0;
         if (Input.GetKey(KeyCode.A))
         {
             rotationCommand = 1;
-
-            if (!rightThrusterParticles.isPlaying)
-            {
-                rightThrusterParticles.Play();
-            }
-
+            PlayParticles(rightThrusterParticles);
         }
         else if (Input.GetKey(KeyCode.D))
         {
-
             rotationCommand = -1;
-
-            if (!leftThrusterParticles.isPlaying)
-            {
-                leftThrusterParticles.Play();
-            }
-
+            PlayParticles(leftThrusterParticles);
         }
         else
         {
-            rightThrusterParticles.Stop();
-            leftThrusterParticles.Stop();
+            rotationCommand = 0;
+            StopPatricles(rightThrusterParticles);
+            StopPatricles(leftThrusterParticles);
         }
 
         rotationSpeedFinal = Vector3.forward * rotationCommand * rotationSpeedBase * rotationSpeedModifier;
@@ -116,11 +99,11 @@ public class Mover : MonoBehaviour
         rigBody.AddRelativeTorque(_vec * Time.deltaTime);
     }
 
-    private void PlayAudio()
+    void PlayAudio(AudioClip _clip)
     {
         if (!audSource.isPlaying)
         {
-            audSource.PlayOneShot(mainEngineSound);
+            audSource.PlayOneShot(_clip);
         }
     }
 
@@ -130,6 +113,17 @@ public class Mover : MonoBehaviour
         {
             audSource.Stop();
         }
+    }
+    void PlayParticles(ParticleSystem _particles)
+    {
+        if (!_particles.isPlaying)
+        {
+            _particles.Play();
+        }
+    }
+    void StopPatricles(ParticleSystem _particles)
+    {
+        _particles.Stop();
     }
 
 }

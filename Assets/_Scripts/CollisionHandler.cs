@@ -45,7 +45,6 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Finish":
                 StartNextLevelSequence();
-               
                 break;
             default:
                 StartCollisionSequence();
@@ -55,30 +54,31 @@ public class CollisionHandler : MonoBehaviour
 
     void StartCollisionSequence()
     {
-        rigBody.freezeRotation  = false;
-        rigBody.constraints     = 0;
-        mover.enabled = false;
+        FreeConstraints();
+        
+        DisableMover();
 
-        audSource.Stop();
+        StopAudio();
 
-        crashParticles.Play();
+        PlayParticles(crashParticles);
 
-        PlayAudio(crashSound);
-     
+        PlayAudioOneShot(crashSound);
+
         Invoke("ReloadLevel", collisionSequenceTime);
 
         isTransitioning = true;
     }
 
+
     void StartNextLevelSequence()
     {
-        mover.enabled = false;
+        DisableMover();
 
-        audSource.Stop();
+        StopAudio();
 
-        successParticles.Play();
+        PlayParticles(successParticles);
 
-        PlayAudio(successSound);
+        PlayAudioOneShot(successSound);
         
         Invoke("LoadNextLevel", nextLevelTime);
         
@@ -87,35 +87,60 @@ public class CollisionHandler : MonoBehaviour
 
     void LoadNextLevel()
     {
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        nextSceneIndex = currentSceneIndex + 1;
-        
-        if(nextSceneIndex == SceneManager.sceneCountInBuildSettings)
-        {
-            nextSceneIndex = 0;
-        }
-        
-        SceneManager.LoadScene(nextSceneIndex);
+        SceneManager.LoadScene(GetNextSceneIndex());
     }
 
     void ReloadLevel()
     {
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
+        SceneManager.LoadScene(GetCurrentSceneIndex());
     }
 
-    private void PlayAudio(AudioClip _clip)
+    private int GetNextSceneIndex()
+    {
+        int _nextSceneIndex = GetCurrentSceneIndex() + 1;
+
+        if (_nextSceneIndex == SceneManager.sceneCountInBuildSettings)
+        {
+            _nextSceneIndex = 0;
+        }
+        return _nextSceneIndex;
+    }
+    private int GetCurrentSceneIndex()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
+    }
+
+    private void DisableMover()
+    {
+        mover.enabled = false;
+    }
+
+    private void FreeConstraints()
+    {
+        rigBody.freezeRotation = false;
+        rigBody.constraints = 0;
+    }
+    private void PlayAudioOneShot(AudioClip _clip)
     {
         audSource.PlayOneShot(_clip);
     }
 
-    //private void StopAudio()
-    //{
-    //    if (audSource.isPlaying)
-    //    {
-    //        audSource.Stop();
-    //    }
-    //}
-
-
+    private void StopAudio()
+    {
+        if (audSource.isPlaying)
+        {
+            audSource.Stop();
+        }
+    }
+    void PlayParticles(ParticleSystem _particles)
+    {
+        if (!_particles.isPlaying)
+        {
+            _particles.Play();
+        }
+    }
+    void StopPatricles(ParticleSystem _particles)
+    {
+        _particles.Stop();
+    }
 }
