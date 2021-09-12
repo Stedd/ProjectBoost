@@ -10,6 +10,9 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] AudioClip crashSound;
     [SerializeField] AudioClip successSound;
 
+    [SerializeField] ParticleSystem crashParticles;
+    [SerializeField] ParticleSystem successParticles;
+
     Rigidbody   rigBody;
     Mover       mover;
     AudioSource audSource;
@@ -58,6 +61,8 @@ public class CollisionHandler : MonoBehaviour
 
         audSource.Stop();
 
+        crashParticles.Play();
+
         PlayAudio(crashSound);
      
         Invoke("ReloadLevel", collisionSequenceTime);
@@ -70,6 +75,8 @@ public class CollisionHandler : MonoBehaviour
         mover.enabled = false;
 
         audSource.Stop();
+
+        successParticles.Play();
 
         PlayAudio(successSound);
         

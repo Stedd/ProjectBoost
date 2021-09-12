@@ -11,6 +11,14 @@ public class Mover : MonoBehaviour
 
     [SerializeField] AudioClip mainEngineSound;
 
+    [SerializeField] int mainEngineEmitCount;
+    [SerializeField] ParticleSystem mainEngineParticles;
+    [SerializeField] int sideThrustersEmitCount;
+    [SerializeField] ParticleSystem leftThrusterParticles;
+    [SerializeField] ParticleSystem rightThrusterParticles;
+
+
+
     public float thrustCommand;
     public float rotationCommand;
 
@@ -47,10 +55,18 @@ public class Mover : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             thrustCommand = 1;
+
             PlayAudio();
+
+            if (!mainEngineParticles.isPlaying)
+            {
+                mainEngineParticles.Play();
+            }
+
         }
         if(Input.GetKeyUp(KeyCode.Space))
         {
+            mainEngineParticles.Stop();
             StopAudio();
         }
 
@@ -63,10 +79,28 @@ public class Mover : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             rotationCommand = 1;
+
+            if (!rightThrusterParticles.isPlaying)
+            {
+                rightThrusterParticles.Play();
+            }
+
         }
         else if (Input.GetKey(KeyCode.D))
         {
+
             rotationCommand = -1;
+
+            if (!leftThrusterParticles.isPlaying)
+            {
+                leftThrusterParticles.Play();
+            }
+
+        }
+        else
+        {
+            rightThrusterParticles.Stop();
+            leftThrusterParticles.Stop();
         }
 
         rotationSpeedFinal = Vector3.forward * rotationCommand * rotationSpeedBase * rotationSpeedModifier;
